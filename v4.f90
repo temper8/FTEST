@@ -25,8 +25,8 @@ Contains
 
 end module Test
 
-program v4
-! This is a comment line, it is ignored by the compiler
+program vt
+! Vector4 tests
   use Test
   type(Vector4) v1, v2, v3
   print *, 'Hello, V4!'
@@ -35,4 +35,4 @@ program v4
   print *,v1
   v3 = v1 + v2
   print *, v3
-end program v4
+end program vt
