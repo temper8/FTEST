@@ -1,0 +1,1 @@
+ifort /debug:full /Qopt-report  v4.f90
