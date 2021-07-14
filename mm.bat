@@ -1,0 +1,1 @@
+ifort /O2 /debug:full /Qopt-report  /Qparallel  matmul.f90
