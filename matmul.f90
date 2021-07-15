@@ -26,7 +26,7 @@ program mul
      real    ::  dt1, dt2, dt3 
      print *, 'Hello, matmul'
      print *, "         n", "      init","         parallel", "     no-parallel"
-     do nn = 4500, 5000, 100
+     do nn = 500, 2500, 100
      call cpu_time(T1) 
      CALL RANDOM_NUMBER(a)
      CALL RANDOM_NUMBER(b)    
