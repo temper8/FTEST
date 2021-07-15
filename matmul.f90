@@ -1,8 +1,11 @@
 module mm
    Contains   
    subroutine matmul2(a,b,c,n)
+    implicit none
       Real(8) a(n,n),b(n,n),c(n,n)
+      integer i,j,k,n
       c=0.d0
+      !DIR$ NOPARALLEL
       do i=1,n         ! Outer loop is parallelized.
          do j=1,n      ! inner loops are interchanged
             do k=1,n   ! new inner loop is vectorized 
@@ -17,24 +20,33 @@ program mul
    ! Vector4 tests
      use mm
      use sub
-     PARAMETER n = 3000
-     real(8), dimension(n,n) :: a, b, c
-     real    ::  TT1,TT2 
+     integer nn
+     real(8), dimension(5000,5000) :: a, b, c
+     real    ::  T1,T2 
+     real    ::  dt1, dt2, dt3 
      print *, 'Hello, matmul'
+     print *, "         n", "      init","         parallel", "     no-parallel"
+     do nn = 4500, 5000, 100
      call cpu_time(T1) 
      CALL RANDOM_NUMBER(a)
      CALL RANDOM_NUMBER(b)    
      call cpu_time(T2)
-     print *, "time=" , T2-T1
+     dt1 = T2-T1
+     !print *, sum(c) 
 
      call cpu_time(T1) 
-     call matmul(a,b,c,n)
+     call matmul(a,b,c,nn)
      call cpu_time(T2)
-     print *, "time=" , T2-T1
+     dt2 = T2-T1
+     !print *, sum(c)     
 
      call cpu_time(T1) 
-     call matmul2(a,b,c,n)
+     call matmul2(a,b,c,nn)
      call cpu_time(T2)
-     print *, "time=" , T2-T1
+     dt3 = T2-T1
+     !print *, sum(c)
+
+     print *, nn, dt1, dt2, dt3
+     end do
      print *,"end"
 end program mul
