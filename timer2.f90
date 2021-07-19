@@ -23,6 +23,7 @@ PROGRAM timer2
 	use test
 	IMPLICIT NONE
 	REAL :: t1,t2,rate 
+	real sys_clock(3), cpu_time_(3)
 	INTEGER :: c1,c2,cr,cm,i,j,n,s
 	INTEGER :: x, y, count
 	INTEGER , PARAMETER :: runs=10000
@@ -34,7 +35,7 @@ PROGRAM timer2
 	rate = REAL(cr)
 	WRITE(*,*) "system_clock rate ",rate
   
-	do count = 100,500,100
+	do count = 100,1500,100
 		x = count
 		y = count
 		
@@ -46,10 +47,9 @@ PROGRAM timer2
 
 		CALL CPU_TIME(t2)
 		CALL SYSTEM_CLOCK(c2)	
-		print *,x, x*y
-		WRITE(*,*) "system_clock : ",(c2 - c1)/rate
-		WRITE(*,*) "cpu_time     : ",(t2-t1)
 
+		sys_clock(1) = (c2 - c1)/rate
+		cpu_time_(1) = (t2-t1)
  	
 	CALL CPU_TIME(t1)
 	CALL SYSTEM_CLOCK(c1)	
@@ -65,9 +65,9 @@ PROGRAM timer2
 	END DO   
 	CALL CPU_TIME(t2)
 	CALL SYSTEM_CLOCK(c2)	
-	print *,x, x*y
-	WRITE(*,*) "system_clock : ",(c2 - c1)/rate
-	WRITE(*,*) "cpu_time     : ",(t2-t1)
+
+	sys_clock(2) = (c2 - c1)/rate
+	cpu_time_(2) = (t2-t1)
 
 	CALL CPU_TIME(t1)
 	CALL SYSTEM_CLOCK(c1)	
@@ -80,9 +80,12 @@ PROGRAM timer2
 	END DO   
 	CALL CPU_TIME(t2)
 	CALL SYSTEM_CLOCK(c2)	
-	print *, 'NOPARALLEL'
-	WRITE(*,*) "system_clock : ",(c2 - c1)/rate
-	WRITE(*,*) "cpu_time     : ",(t2-t1)
+
+	sys_clock(3) = (c2 - c1)/rate
+	cpu_time_(3) = (t2-t1)
+	print *, x, x*y, '        PARALLEL', '     NOPARALLEL'	
+	WRITE(*,*) "system_clock : ",sys_clock
+	WRITE(*,*) "cpu_time     : ",cpu_time_
 	print *,'-----------------'
 	deallocate (array)
 	end do
