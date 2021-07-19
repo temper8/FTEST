@@ -35,6 +35,8 @@ PROGRAM timer2
 	rate = REAL(cr)
 	WRITE(*,*) "system_clock rate ",rate
   
+	open(1, file = 'times.txt') 
+
 	do count = 100,1500,100
 		x = count
 		y = count
@@ -105,6 +107,8 @@ PROGRAM timer2
 	WRITE(*,*) "system_clock : ",sys_clock
 	WRITE(*,*) "cpu_time     : ",cpu_time_
 	print *,'-----------------'
+	write(1,"(5F10.5)")  sys_clock(3)/sys_clock(2)
 	deallocate (array)
 	end do
+	close(1)
   END PROGRAM timer2
