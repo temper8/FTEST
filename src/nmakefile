@@ -1,0 +1,25 @@
+# makefile for microsoft nmake
+
+#Compiler
+FC = ifort
+#FCFLAGS = -Od #disable optimisation
+#FCFLAGS = -Ofast #The aggressive optimizations
+FCFLAGS = /O3 /Qparallel #the auto-parallelizer
+
+COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
+
+objects = sub_matmul.obj matmul.obj
+
+grill_exe : $(objects)
+	$(FC) -o matmul.exe $(objects)
+
+
+sub_matmul.mod sub_matmul.obj: sub_matmul.f90
+	$(COMPILE) /Qopt-report sub_matmul.f90
+	
+matmul.mod matmul.obj: matmul.f90
+	$(COMPILE) matmul.f90 
+
+clean:
+    del *.mod 
+    del *.obj
