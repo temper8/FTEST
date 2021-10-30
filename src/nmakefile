@@ -5,6 +5,7 @@ FC = ifort
 #FCFLAGS = -Od #disable optimisation
 #FCFLAGS = -Ofast #The aggressive optimizations
 FCFLAGS = /O3 /Qparallel #the auto-parallelizer
+FCFLAGS = /Ofast /Qparallel #the auto-parallelizer
 
 COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
 
