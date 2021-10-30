@@ -13,7 +13,7 @@ COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
 objects = sub_matmul.obj test_matmul.obj
 
 test_matmul : $(objects)
-	$(FC) -o test_matmul.exe $(objects)
+	$(FC) -o test_matmul.exe $(FCFLAGS) $(objects)
 
 sub_matmul.mod sub_matmul.obj: sub_matmul.f90
 	$(COMPILE) /Qopt-report sub_matmul.f90
