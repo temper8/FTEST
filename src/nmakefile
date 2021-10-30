@@ -3,23 +3,23 @@
 #Compiler
 FC = ifort
 #FCFLAGS = -Od #disable optimisation
+#FCFLAGS = -O1 #disable optimisation
 #FCFLAGS = -Ofast #The aggressive optimizations
-FCFLAGS = /O3 /Qparallel #the auto-parallelizer
+#FCFLAGS = /O3 /Qparallel #the auto-parallelizer
 FCFLAGS = /Ofast /Qparallel #the auto-parallelizer
 
 COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
 
-objects = sub_matmul.obj matmul.obj
+objects = sub_matmul.obj test_matmul.obj
 
-grill_exe : $(objects)
-	$(FC) -o matmul.exe $(objects)
-
+test_matmul : $(objects)
+	$(FC) -o test_matmul.exe $(objects)
 
 sub_matmul.mod sub_matmul.obj: sub_matmul.f90
 	$(COMPILE) /Qopt-report sub_matmul.f90
 	
-matmul.mod matmul.obj: matmul.f90
-	$(COMPILE) matmul.f90 
+test_matmul.mod test_matmul.obj: test_matmul.f90
+	$(COMPILE) test_matmul.f90 
 
 clean:
     del *.mod 

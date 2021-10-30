@@ -31,7 +31,7 @@ def platform_info():
 
 @exec_time()
 def exec_matmul_test():
-	process = subprocess.run('src/matmul.exe')
+	process = subprocess.run('src/test_matmul.exe')
 
 print("Current working directory: {0}".format(os.getcwd()))
 
