@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH -p stdmemq          # Submit to 'stdmemq' Partitiion or queue
 #SBATCH -J hw_test          # Name the job as 'MPItest'
 #SBATCH -o hw_test-%j.out   # Write the standard output to file named 'jMPItest-<job_number>.out'
 #SBATCH -e hw_test-%j.err   # Write the standard error to file named 'jMPItest-<job_number>.err'
