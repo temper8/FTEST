@@ -1,3 +1,5 @@
 *.optrpt
 *.mod
 __pycache__/
+*.out
+*.err
