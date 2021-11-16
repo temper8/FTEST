@@ -17,4 +17,4 @@ pwd                         # prints current working directory
 date                        # prints the date and time
 srun python hello_world.py $1 $2
 date
-wait
+echo "end"
