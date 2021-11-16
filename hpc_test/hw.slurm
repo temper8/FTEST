@@ -6,8 +6,11 @@
 #SBATCH --nodes=1            # Request N nodes
 #SBATCH --ntasks-per-node=1 # Request n cores or task per node
 #SBATCH --mem-per-cpu=4000   # Request 4000MB (4GB) RAM per core
-
+echo $0
+echo $1
+echo $2
+echo $3
 module list                 # will list modules loaded by default. In our case, it will be GNU8 compilers and OpenMPI3 MPI libraries
 pwd                         # prints current working directory
 date                        # prints the date and time
-srun python hello_world.py
+srun python hello_world.py $1
