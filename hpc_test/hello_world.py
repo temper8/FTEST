@@ -1,4 +1,5 @@
 import sys
+import time
 #from mpi4py import MPI
 #size = MPI.COMM_WORLD.Get_size()
 #rank = MPI.COMM_WORLD.Get_rank()
@@ -7,3 +8,6 @@ import sys
 print("Hello, World!")
 print('Number of arguments:', len(sys.argv), 'arguments.')
 print('Argument List:', str(sys.argv))
+print("wait..")
+time.sleep(30)
+print('end wait')
