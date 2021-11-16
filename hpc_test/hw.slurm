@@ -14,3 +14,5 @@ module list                 # will list modules loaded by default. In our case, 
 pwd                         # prints current working directory
 date                        # prints the date and time
 srun python hello_world.py $1
+date
+wait
