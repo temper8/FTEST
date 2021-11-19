@@ -19,4 +19,4 @@ test_matmul.mod test_matmul.o: test_matmul.f90
 	$(COMPILE) test_matmul.f90 
 
 clean:
-	-rm -f *.o *.mod sub_matmul.exe
+	-rm -f *.o *.mod *.exe
