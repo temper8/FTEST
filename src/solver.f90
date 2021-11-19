@@ -1,12 +1,15 @@
-program test_solver
+program solver
     use Utils
     use Types
     use le_solver
     use gausets
     integer NMAX 
     PARAMETER        ( NMAX = 10000 )
-    complex, dimension(NMAX,NMAX) :: RA, RB
-    
+    complex(8), dimension(:,:), allocatable :: RA, RB
+
+	complex(8), dimension (:,:), allocatable :: MA
+	complex(8), dimension (:,:), allocatable :: MB	    
+
 	complex(DPT), dimension (:,:), allocatable :: A
 	complex(DPT), dimension (:,:), allocatable :: B	
     
@@ -17,7 +20,7 @@ program test_solver
     integer nn
 
     real all_time1, all_time2
-    real time_init
+    real time_init, time_mkl
     real time21, time22
     real    ::  T1,T2 
     real    ::  dt1, dt2, dt3 
@@ -32,11 +35,8 @@ program test_solver
     end if
     print *, "N=", N 
 
-
-    
-    !allocate ( A(N, N) )
-    !allocate ( B(N, 1) )
-    
+    allocate ( RA(NMAX, NMAX) )
+    allocate ( RB(NMAX, 1) )
 
     all_time1 = sys_time()
     print *, 'Init matrix'
@@ -45,36 +45,33 @@ program test_solver
     call clarnv	(1, ISEED, NMAX*NMAX,	RA )	
 	call clarnv	(1, ISEED, NMAX,	RB )  
     
-    print *, RB(1:N, 1:1)
-    !call clarnv	(1, ISEED, N*N,	A )	
-	!call clarnv	(1, ISEED, N,	B )  
-    
-    
     call cpu_time(T2)
     dt1 = T2-T1
     print *, "init matrix time = ", dt1         
-    print *, "         n","   cpu time", "         sys time", "      cpu/sys time"    
 
-    do nn = 500, 5000, 500
-        N = nn
-        A = RA(1:N, 1:N)
-        B = RB(1:N, 1:1)
-        !print *, RB(1:N, 1:1)
-        time_init = sys_time()
-        call cpu_time(T1) 
+    A = RA(1:N, 1:N)
+    B = RB(1:N, 1:1)
+    !print *, RB(1:N, 1:1)
+    call gauset (A,B)
+    !print *, B
+    print *, "---------"
+    MA = RA(1:N, 1:N)
+    MB = RB(1:N, 1:1)
+   
 
-        call mkl_le_solver(A,B)
-        !call gauset (A,B)
+    time_init = sys_time()
+    call cpu_time(T1) 
 
-        call cpu_time(T2)
-        time_matmul = sys_time() - time_init
-        dt2 = T2-T1
-    
-        print *, nn, dt2,  time_matmul, dt2/time_matmul
+    call mkl_le_solver(MA,MB)
 
+    call cpu_time(T2)
+    time_mkl = sys_time() - time_init
+
+    print *, 'mkl_le_solver exec time',  time_mkl
+    !print *, MB
+    print *, "---------"
        ! print *, RB(1:N, 1:1)
-    end do
-    all_time2 = sys_time()
-    print *,"all time =", all_time2 - all_time1
 
-end program test_solver
+    print *,'Err sum: ', SUM(CDABS(B-MB))
+
+end program solver

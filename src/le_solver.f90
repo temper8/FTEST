@@ -35,13 +35,13 @@ module le_solver
 	
     !     .. Local Arrays ..
 	    INTEGER, dimension (:), allocatable ::   IPIV
-	    complex, dimension (:,:) :: A
-	    complex, dimension (:,:) :: B	
+	    complex(8), dimension (:,:) :: A
+	    complex(8), dimension (:,:) :: B	
 
 	    integer, dimension( 4 )  ::	ISEED 
 
         N = size(B)
-        !print *, N
+        print *, N
         LDA = N
         LDB = N 
    
@@ -52,7 +52,7 @@ module le_solver
         !CALL PRINT_MATRIX( 'A matrix', N, N, A, LDA )
 
         !Solve the equations A*X = B.
-        CALL CGESV( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
+        CALL ZGESV ( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
     
         IF( INFO.GT.0 ) THEN
             WRITE(*,*)'The diagonal element of the triangular factor of A,'

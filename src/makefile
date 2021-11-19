@@ -3,10 +3,10 @@
 #Compiler
 FC = ifort
 #FCFLAGS = -Od #disable optimisation
-FCFLAGS = -O1 #disable optimisation
+#FCFLAGS = -O1 #disable optimisation
 #FCFLAGS = -Ofast #The aggressive optimizations
 #FCFLAGS = /O3 /Qparallel #the auto-parallelizer
-#FCFLAGS = /Ofast /Qparallel #the auto-parallelizer
+FCFLAGS = /Ofast /Qparallel #the auto-parallelizer
 
 COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
 
@@ -17,10 +17,18 @@ objects = utils.obj sub_matmul.obj test_matmul.obj
 test_matmul : $(objects)
 	$(FC) -o test_matmul.exe $(FCFLAGS) $(objects)
 
-solver_objects = Const.obj ErrorMan.obj Types.obj LowLev.obj gauset.obj utils.obj le_solver.obj test_solver.obj
+solver_objects =Types.obj Const.obj ErrorMan.obj  LowLev.obj utils.obj gauset.obj  le_solver.obj solver.obj
 
-test_solver : $(solver_objects)
-	$(FC) -o test_solver.exe $(FCFLAGS) $(solver_objects) $(MKLFLAGS)
+solver : $(solver_objects)
+	$(FC) -o solver.exe $(FCFLAGS) $(solver_objects) $(MKLFLAGS)
+
+test_solver_objects = Types.obj Const.obj ErrorMan.obj  LowLev.obj utils.obj gauset.obj  le_solver.obj test_solver.obj
+
+solver : $(solver_objects)
+	$(FC) -o solver.exe $(FCFLAGS) $(solver_objects) $(MKLFLAGS)
+
+test_solver : $(test_solver_objects)
+	$(FC) -o test_solver.exe $(FCFLAGS) $(test_solver_objects) $(MKLFLAGS)
 
 Const.mod Const.obj: Const.f90
 	$(COMPILE) Const.f90 
@@ -51,6 +59,9 @@ test_matmul.mod test_matmul.obj: test_matmul.f90
 
 test_solver.mod test_solver.obj: test_solver.f90
 	$(COMPILE) test_solver.f90  /4I8 -I"%MKLROOT%\include" 
+
+solver.mod solver.obj: solver.f90
+	$(COMPILE) solver.f90  /4I8 -I"%MKLROOT%\include" 
 
 clean:
     del *.mod 
