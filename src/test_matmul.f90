@@ -1,18 +1,6 @@
-module util
-   Contains   
-   function sys_time()
-      implicit none
-      real(8) sys_time
-      integer count, count_rate, count_max
-      call system_clock(count, count_rate, count_max)
-      sys_time = count*1.0/count_rate
-      return
-   end   
-
-end module util
 
 program test_matmul
-    use util
+    use utils
     use sub
     integer nn
     real(8), dimension(5000,5000) :: a, b, c

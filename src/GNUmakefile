@@ -7,10 +7,13 @@ FCFLAGS = -Ofast -parallel #the auto-parallelizer
 
 COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
 
-objects = sub_matmul.o test_matmul.o
+objects = utils.o sub_matmul.o test_matmul.o
 
 test_matmul : $(objects)
 	$(FC) -o test_matmul.exe $(FCFLAGS) $(objects)
+	
+utils.mod utils.o: utils.f90
+	$(COMPILE) utils.f90 
 
 sub_matmul.mod sub_matmul.o: sub_matmul.f90
 	$(COMPILE) -qopt-report sub_matmul.f90
