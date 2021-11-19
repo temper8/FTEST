@@ -24,3 +24,4 @@ test_matmul.mod test_matmul.obj: test_matmul.f90
 clean:
     del *.mod 
     del *.obj
+	del *.exe
