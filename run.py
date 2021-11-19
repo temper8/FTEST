@@ -8,9 +8,9 @@ from benchmark import exec_time
 def compiler_info():
 	print("="*20, "Compiler Information", "="*20)
 	if platform.uname().system == 'Windows':
-		file_name="src/nmakefile"
+		file_name="src/Makefile"
 	else:
-		file_name="src/makefile"
+		file_name="src/GNUmakefile"
 	file=open(file_name,"r")
 	for line in file:
 		if line.startswith('FC'):
