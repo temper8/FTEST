@@ -1,12 +1,14 @@
 program test_solver
-    use utils
+    use Utils
+    use Types
     use le_solver
+    use gausets
     integer NMAX 
     PARAMETER        ( NMAX = 10000 )
     complex, dimension(NMAX,NMAX) :: RA, RB
     
-	complex, dimension (:,:), allocatable :: A
-	complex, dimension (:,:), allocatable :: B	
+	complex(DPT), dimension (:,:), allocatable :: A
+	complex(DPT), dimension (:,:), allocatable :: B	
     
 	integer, dimension( 4 )  ::	ISEED
 
@@ -53,7 +55,7 @@ program test_solver
     print *, "init matrix time = ", dt1         
     print *, "         n","   cpu time", "         sys time", "      cpu/sys time"    
 
-    do nn = 500, 10000, 500
+    do nn = 500, 5000, 500
         N = nn
         A = RA(1:N, 1:N)
         B = RB(1:N, 1:1)
@@ -61,8 +63,8 @@ program test_solver
         time_init = sys_time()
         call cpu_time(T1) 
 
-        call mkl_le_solver(A,B)
-
+        !call mkl_le_solver(A,B)
+        call gauset (A,B)
 
         call cpu_time(T2)
         time_matmul = sys_time() - time_init

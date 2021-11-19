@@ -17,11 +17,26 @@ objects = utils.obj sub_matmul.obj test_matmul.obj
 test_matmul : $(objects)
 	$(FC) -o test_matmul.exe $(FCFLAGS) $(objects)
 
-solver_objects = utils.obj le_solver.obj test_solver.obj
+solver_objects = Const.obj ErrorMan.obj Types.obj LowLev.obj gauset.obj utils.obj le_solver.obj test_solver.obj
 
 test_solver : $(solver_objects)
 	$(FC) -o test_solver.exe $(FCFLAGS) $(solver_objects) $(MKLFLAGS)
 
+Const.mod Const.obj: Const.f90
+	$(COMPILE) Const.f90 
+
+ErrorMan.mod ErrorMan.obj: ErrorMan.f90
+	$(COMPILE) ErrorMan.f90 
+
+Types.mod Types.obj: Types.f90
+	$(COMPILE) Types.f90 
+
+LowLev.mod LowLev.obj: LowLev.f90
+	$(COMPILE) LowLev.f90 
+
+gauset.mod gauset.obj: gauset.f90
+	$(COMPILE) gauset.f90 
+	
 utils.mod utils.obj: utils.f90
 	$(COMPILE) utils.f90 
 

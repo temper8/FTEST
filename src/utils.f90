@@ -1,4 +1,4 @@
-module utils
+module Utils
     Contains   
     function sys_time()
        implicit none
@@ -9,5 +9,5 @@ module utils
        return
     end   
  
- end module utils
+ end module Utils
  
