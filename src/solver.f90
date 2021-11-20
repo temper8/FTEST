@@ -42,22 +42,19 @@ program solver
     print *, 'Init matrix'
     ISEED = (/ 1, 2, 3, 4 /)
     call cpu_time(T1) 
-    call clarnv	(1, ISEED, NMAX*NMAX,	RA )	
-	call clarnv	(1, ISEED, NMAX,	RB )  
-    
+    call zlarnv	(1, ISEED, NMAX*NMAX,	RA )	
+	call zlarnv	(1, ISEED, NMAX,	RB )  
     call cpu_time(T2)
     dt1 = T2-T1
     print *, "init matrix time = ", dt1         
 
     A = RA(1:N, 1:N)
     B = RB(1:N, 1:1)
-    !print *, RB(1:N, 1:1)
     call gauset (A,B)
     !print *, B
     print *, "---------"
     MA = RA(1:N, 1:N)
     MB = RB(1:N, 1:1)
-   
 
     time_init = sys_time()
     call cpu_time(T1) 
@@ -74,4 +71,4 @@ program solver
 
     print *,'Err sum: ', SUM(CDABS(B-MB))
 
-end program solver
+end program  solver
