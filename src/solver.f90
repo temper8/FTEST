@@ -17,13 +17,8 @@ program solver
 
     CHARACTER(len=32) :: arg
     integer stat
-    integer nn
 
-    real all_time1, all_time2
-    real time_init, time_mkl
-    real time21, time22
-    real    ::  T1,T2 
-    real    ::  dt1, dt2, dt3 
+    real time_init, time_mkl, time_gauset
 
     print *, 'Solve the complex equations A*X = B.'
     print *, 'and calc exec time'
@@ -47,6 +42,7 @@ program solver
     call cpu_time(T2)
     dt1 = T2-T1
     print *, "init matrix time = ", dt1         
+    print *
 
     MA = RA(1:N, 1:N)
     MB = RB(1:N, 1:1)
@@ -65,10 +61,13 @@ program solver
 
     A = RA(1:N, 1:N)
     B = RB(1:N, 1:1)
+    time_init = sys_time()
     call gauset (A,B)
+    time_gauset = sys_time() - time_init
   
     print *, "---------"
 
     print *,'Err sum: ', SUM(CDABS(B-MB))
-
+    print *,'Time ratio: ',time_gauset/time_mkl
+    
 end program  solver
