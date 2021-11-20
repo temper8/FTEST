@@ -48,11 +48,6 @@ program solver
     dt1 = T2-T1
     print *, "init matrix time = ", dt1         
 
-    A = RA(1:N, 1:N)
-    B = RB(1:N, 1:1)
-    call gauset (A,B)
-    !print *, B
-    print *, "---------"
     MA = RA(1:N, 1:N)
     MB = RB(1:N, 1:1)
 
@@ -65,9 +60,14 @@ program solver
     time_mkl = sys_time() - time_init
 
     print *, 'mkl_le_solver exec time',  time_mkl
-    !print *, MB
     print *, "---------"
-       ! print *, RB(1:N, 1:1)
+
+
+    A = RA(1:N, 1:N)
+    B = RB(1:N, 1:1)
+    call gauset (A,B)
+  
+    print *, "---------"
 
     print *,'Err sum: ', SUM(CDABS(B-MB))
 
