@@ -41,7 +41,7 @@ module le_solver
 	    integer, dimension( 4 )  ::	ISEED 
 
         N = size(B)
-        print *, N
+        !print *, N
         LDA = N
         LDB = N 
    
