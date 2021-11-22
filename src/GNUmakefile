@@ -12,7 +12,8 @@ MKLFLAGS =  ${MKLROOT}/lib/intel64/libmkl_blas95_ilp64.a ${MKLROOT}/lib/intel64/
 
 COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
 
-COMPILE_MKL = $(FC) $(FCFLAGS) $(TARGET_ARCH) -I"${MKLROOT}/include" -c
+MKL_INCLUDE = -I${MKLROOT}/include/intel64/ilp64 -i8  -I"${MKLROOT}/include" 
+COMPILE_MKL = $(FC) $(FCFLAGS) $(TARGET_ARCH) $(MKL_INCLUDE)-c
 
 objects = utils.o sub_matmul.o test_matmul.o
 
