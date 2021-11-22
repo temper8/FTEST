@@ -33,9 +33,9 @@ module MKL_wrapper
         real T1,T2
         print *, 'Init random matrix ', N
         ISEED = (/ 1, 2, 3, 4 /)
-        call cpu_time(T1) 
+       ! call cpu_time(T1) 
         call zlarnv	(1, ISEED, N, mat)	
-        call cpu_time(T2)
+        !call cpu_time(T2)
         print *, "init matrix time = ", T2-T1         
         print *
 

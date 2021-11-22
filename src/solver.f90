@@ -42,11 +42,11 @@ program solver
     MB = RB(1:N, 1:1)
 
     time_init = sys_time()
-    call cpu_time(T1) 
+    !call cpu_time(T1) 
 
     call mkl_le_solver(MA,MB)
 
-    call cpu_time(T2)
+    !call cpu_time(T2)
     time_mkl = sys_time() - time_init
 
     print *, 'mkl_le_solver exec time',  time_mkl, T2-T1
