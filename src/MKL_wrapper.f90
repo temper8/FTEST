@@ -27,7 +27,7 @@ module MKL_wrapper
     !
         implicit none
         integer(4) N
-        complex(8), dimension (:,:):: Mat
+        complex(8), dimension (*):: Mat
 
         integer, dimension( 4 )  ::	ISEED
         real T1,T2
