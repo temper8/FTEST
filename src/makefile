@@ -32,24 +32,9 @@ solver : $(solver_objects)
 test_solver : $(test_solver_objects)
 	$(FC) -o test_solver.exe $(FCFLAGS) $(test_solver_objects) $(MKLFLAGS)
 
-Const.mod Const.obj: Const.f90
-	$(COMPILE) Const.f90 
-
-ErrorMan.mod ErrorMan.obj: ErrorMan.f90
-	$(COMPILE) ErrorMan.f90 
-
-Types.mod Types.obj: Types.f90
-	$(COMPILE) Types.f90 
-
-LowLev.mod LowLev.obj: LowLev.f90
-	$(COMPILE) LowLev.f90 
-
-gauset.mod gauset.obj: gauset.f90
-	$(COMPILE) gauset.f90 
+.f90.obj: 
+    $(COMPILE) $<
 	
-utils.mod utils.obj: utils.f90
-	$(COMPILE) utils.f90 
-
 sub_matmul.mod sub_matmul.obj: sub_matmul.f90
 	$(COMPILE) /Qopt-report sub_matmul.f90
 
@@ -59,11 +44,7 @@ MKL_wrapper.mod MKL_wrapper.obj: MKL_wrapper.f90
 test_matmul.mod test_matmul.obj: test_matmul.f90
 	$(COMPILE) test_matmul.f90 
 
-test_solver.mod test_solver.obj: test_solver.f90
-	$(COMPILE) test_solver.f90  
 
-solver.mod solver.obj: solver.f90
-	$(COMPILE) solver.f90  
 
 clean:
     del *.mod 
