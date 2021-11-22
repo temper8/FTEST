@@ -5,7 +5,7 @@ program solver
     use gausets
     implicit none
     integer NMAX 
-    PARAMETER        ( NMAX = 10000 )
+    !PARAMETER        ( NMAX = 10000 )
     complex(8), dimension(:,:), allocatable :: RA, RB
 
 	complex(8), dimension (:,:), allocatable :: MA
@@ -31,7 +31,7 @@ program solver
        N = 4
     end if
     print *, "N=", N 
-
+    NMAX = 2*N
     allocate ( RA(NMAX, NMAX) )
     allocate ( RB(NMAX, 1) )
 
