@@ -4,7 +4,7 @@ program solver
     use MKL_wrapper
     use gausets
     implicit none
-    integer NMAX 
+    integer(4) NMAX 
     !PARAMETER        ( NMAX = 10000 )
     complex(8), dimension(:,:), allocatable :: RA, RB
 
@@ -18,7 +18,7 @@ program solver
 
     CHARACTER(len=32) :: arg
     integer stat
-    integer N
+    integer(4) N
     
     real time_init, time_mkl, time_gauset
     real T1,T2
@@ -31,12 +31,15 @@ program solver
        N = 4
     end if
     print *, "N=", N 
+
     NMAX = 2*N
+
     allocate ( RA(NMAX, NMAX) )
     allocate ( RB(NMAX, 1) )
 
-    call random_z(NMAX*NMAX,	RA)
     call random_z(NMAX,	RB)
+    call random_z(NMAX*NMAX,	RA)
+
 
     MA = RA(1:N, 1:N)
     MB = RB(1:N, 1:1)
