@@ -7,10 +7,12 @@ FC = ifort
 #FCFLAGS = -Ofast #The aggressive optimizations
 #FCFLAGS = /O3 /Qparallel #the auto-parallelizer
 FCFLAGS = /Ofast /Qparallel #the auto-parallelizer
+ 
+COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c 
 
-COMPILE = $(FC) $(FCFLAGS) $(TARGET_ARCH) -c
+COMPILE_MKL = $(FC) $(FCFLAGS) $(TARGET_ARCH)  /4I8 -I"%MKLROOT%\include" -c 
 
-MKLFLAGS = /4I8  -I"%MKLROOT%\include"  mkl_lapack95_ilp64.lib mkl_intel_ilp64.lib mkl_intel_thread.lib mkl_core.lib libiomp5md.lib
+MKLFLAGS = mkl_lapack95_ilp64.lib mkl_intel_ilp64.lib mkl_intel_thread.lib mkl_core.lib libiomp5md.lib
 
 objects = utils.obj sub_matmul.obj test_matmul.obj
 
@@ -52,16 +54,16 @@ sub_matmul.mod sub_matmul.obj: sub_matmul.f90
 	$(COMPILE) /Qopt-report sub_matmul.f90
 
 le_solver.mod le_solver.obj: le_solver.f90
-	$(COMPILE)   le_solver.f90 /4I8  -I"%MKLROOT%\include" 	
+	$(COMPILE_MKL)   le_solver.f90 
 	
 test_matmul.mod test_matmul.obj: test_matmul.f90
 	$(COMPILE) test_matmul.f90 
 
 test_solver.mod test_solver.obj: test_solver.f90
-	$(COMPILE) test_solver.f90  /4I8 -I"%MKLROOT%\include" 
+	$(COMPILE) test_solver.f90  
 
 solver.mod solver.obj: solver.f90
-	$(COMPILE) solver.f90  /4I8 -I"%MKLROOT%\include" 
+	$(COMPILE_MKL) solver.f90  
 
 clean:
     del *.mod 
