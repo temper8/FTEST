@@ -3,6 +3,7 @@ program solver
     use Types
     use le_solver
     use gausets
+    implicit none
     integer NMAX 
     PARAMETER        ( NMAX = 10000 )
     complex(8), dimension(:,:), allocatable :: RA, RB
@@ -17,9 +18,10 @@ program solver
 
     CHARACTER(len=32) :: arg
     integer stat
-
+    integer N
+    
     real time_init, time_mkl, time_gauset
-
+    real T1,T2
     print *, 'Solve the complex equations A*X = B.'
     print *, 'and calc exec time'
     CALL getarg(1, arg)
@@ -33,15 +35,14 @@ program solver
     allocate ( RA(NMAX, NMAX) )
     allocate ( RB(NMAX, 1) )
 
-    all_time1 = sys_time()
+    !all_time1 = sys_time()
     print *, 'Init matrix'
     ISEED = (/ 1, 2, 3, 4 /)
     call cpu_time(T1) 
     call zlarnv	(1, ISEED, NMAX*NMAX,	RA )	
 	call zlarnv	(1, ISEED, NMAX,	RB )  
     call cpu_time(T2)
-    dt1 = T2-T1
-    print *, "init matrix time = ", dt1         
+    print *, "init matrix time = ", T2-T1         
     print *
 
     MA = RA(1:N, 1:N)
@@ -55,7 +56,7 @@ program solver
     call cpu_time(T2)
     time_mkl = sys_time() - time_init
 
-    print *, 'mkl_le_solver exec time',  time_mkl
+    print *, 'mkl_le_solver exec time',  time_mkl, T2-T1
     print *, "---------"
 
 
@@ -69,5 +70,5 @@ program solver
 
     print *,'Err sum: ', SUM(CDABS(B-MB))
     print *,'Time ratio: ',time_gauset/time_mkl
-    
+
 end program  solver
