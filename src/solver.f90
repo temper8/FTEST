@@ -1,7 +1,7 @@
 program solver
     use Utils
     use Types
-    use le_solver
+    use MKL_wrapper
     use gausets
     implicit none
     integer NMAX 
@@ -35,15 +35,8 @@ program solver
     allocate ( RA(NMAX, NMAX) )
     allocate ( RB(NMAX, 1) )
 
-    !all_time1 = sys_time()
-    print *, 'Init matrix'
-    ISEED = (/ 1, 2, 3, 4 /)
-    call cpu_time(T1) 
-    call zlarnv	(1, ISEED, NMAX*NMAX,	RA )	
-	call zlarnv	(1, ISEED, NMAX,	RB )  
-    call cpu_time(T2)
-    print *, "init matrix time = ", T2-T1         
-    print *
+    call random_z(NMAX*NMAX,	RA)
+    call random_z(NMAX,	RB)
 
     MA = RA(1:N, 1:N)
     MB = RB(1:N, 1:1)

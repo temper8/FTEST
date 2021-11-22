@@ -1,4 +1,4 @@
-module le_solver
+module MKL_wrapper
     Contains   
 	subroutine PRINT_MATRIX( DESC, M, N, A, LDA )
         CHARACTER*(*)    DESC
@@ -21,6 +21,27 @@ module le_solver
   9998 FORMAT( 11(:,1X,'(',F6.2,',',F6.2,')') )
       end  
  
+    subroutine random_z(N, Mat)
+    !
+    !   Generate Random matrix Z
+    !
+        implicit none
+        integer N
+        complex(8), dimension (*) :: Mat
+
+        integer, dimension( 4 )  ::	ISEED
+        real T1,T2
+        print *, 'Init random matrix ', N
+        ISEED = (/ 1, 2, 3, 4 /)
+        call cpu_time(T1) 
+        call zlarnv	(1, ISEED, N, mat)	
+        call cpu_time(T2)
+        print *, "init matrix time = ", T2-T1         
+        print *
+
+
+    end subroutine random_z
+
     subroutine mkl_le_solver(A, B)
     !
     ! Solve the complex equations A*X = B.
@@ -63,4 +84,4 @@ module le_solver
 
     end subroutine mkl_le_solver
 
- end module le_solver
+ end module MKL_wrapper
